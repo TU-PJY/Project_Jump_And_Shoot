@@ -23,7 +23,11 @@ Jump And Shoot은 양 옆에서 다가오는 몬스터들을 총으로 쏘며 �
 플레이어 착지 애니메이션은 플레이어 스프라이트에 가로로 살짝 눌리는 느낌을 주면 플레이어가 바닥에 착지한다는 느낌을 더 살릴 수 있다.  
 
 # 게임의 흐름
-(이미지 추가 예정)
+### 전체 게임루프 흐름
+![Image](https://github.com/user-attachments/assets/14f45a7d-e4c7-4ee4-aad5-9d22d768391b)
+
+### 게임 플레이
+![Image](https://github.com/user-attachments/assets/325cff75-7c86-4c09-a024-5a9c4f4e2aeb)
 
 # 개발 일정
 ### 1주차
