@@ -55,3 +55,29 @@ UI 다듬기, 사운드 추가 및 유저 데이터 처리 시스템 구축
 
 ### 8주차
 성능 최적화 및 디버깅
+
+
+
+
+# 2차 발표 자료
+## 게임 컨셉
+플레이어를 좌, 우로 움직이여 좌우에서 몰려드는 적을 처치하는 게임
+
+## 커밋 현황
+<img width="665" alt="Image" src="https://github.com/user-attachments/assets/0a92349c-3b49-43b2-bd70-f0bfed603d4d" />
+
+## 진행 상황 (완료된 것들)
+기초 게임 프레임워크 구축 및 필요 리소스 확보  
+터치 이벤트 처리  
+
+## MainScene에 등장하는 GameObject(구현된 것들)
+### Player
+![Image](https://github.com/user-attachments/assets/cf407552-5422-40d3-9c1e-bc14918591f0)
+  
+상호작용 구성: 스크린 좌, 우 터치  
+좌측 터치 시 우측 이동, 우측 터치 시 좌측 이동한다.
+
+inputEvent(int touchType)  
+플레이어가 받는 터치 이벤트이다. MainScene에서 터치 이벤트가 발생하면 이 함수 파라미터에 0 또는 1을 전달한다.  
+0은 스크린 좌측 터치, 1은 스크린 우측 터치로 인식하도록 되어있다.
+ 
