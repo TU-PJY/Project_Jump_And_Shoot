@@ -12,7 +12,7 @@ public class GameActivity extends kr.ac.tukorea.ge.spgp2025.a2dg.framework.activ
     @Override
     protected void onCreate(Bundle savedInstanceState) {
       //  GameView.drawsDebugStuffs = BuildConfig.DEBUG;
-        //Metrics.setGameSize(1600, 900);
+        Metrics.setGameSize(1600, 900);
         super.onCreate(savedInstanceState);
         new MainScene().push();
     }
