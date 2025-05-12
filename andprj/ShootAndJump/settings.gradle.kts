@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CookieRun"
+rootProject.name = "JumpAndShoot"
 include(":app")
 include(":a2dg")
  
