@@ -8,6 +8,7 @@ import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
@@ -44,6 +45,10 @@ public class Monster extends Sprite implements IBoxCollidable {
         if(HP == 0)
             return;
         HP -= Value;
+        Sound.playEffect(R.raw.hit);
+        if(HP == 0)
+            Sound.playEffect((R.raw.monster_sound1));
+
     }
 
     @Override
@@ -101,9 +106,10 @@ public class Monster extends Sprite implements IBoxCollidable {
                         positionY +  Metrics.unit * 0.125f
                 );
 
-        // 가로세로가 동일하므로 그냥 그린다.
-        setPosition(positionX + MainScene.camera.shakeResultX,
+        setPosition(
+                positionX + MainScene.camera.shakeResultX,
                 positionY + MainScene.camera.shakeResultY,
-                Metrics.unit * 0.25f,  Metrics.unit * 0.25f);
+                Metrics.unit * 0.25f,  Metrics.unit * 0.25f
+        );
     }
 }
