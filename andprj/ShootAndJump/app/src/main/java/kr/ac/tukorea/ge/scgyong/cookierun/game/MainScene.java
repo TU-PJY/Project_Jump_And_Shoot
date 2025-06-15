@@ -9,6 +9,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 public class MainScene extends Scene {
     public static Player player;
     public MonsterGenerator generator;
+    public static Camera camera;
 
     public enum Layer {
         LAYER1, LAYER2, LAYER3, LAYER4, LAYER5;
@@ -20,7 +21,9 @@ public class MainScene extends Scene {
 
         player = new Player(R.mipmap.commando_left);
         generator = new MonsterGenerator();
+        camera = new Camera();
 
+        add(Layer.LAYER1, camera);
         add(Layer.LAYER1, generator);
         add(Layer.LAYER2, player);
     }

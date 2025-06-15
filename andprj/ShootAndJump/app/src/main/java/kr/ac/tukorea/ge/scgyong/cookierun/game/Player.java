@@ -8,6 +8,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
@@ -102,7 +103,20 @@ public class Player extends Sprite implements IBoxCollidable {
             }
         }
 
+        // 총 발사 사운드 재생
         Sound.playEffect(R.raw.m1);
+
+        // 카메라 흔들림 추가
+        MainScene.camera.AddShake(0.05f);
+
+        // 총알 오브젝트 추가
+        Trace trace;
+        if(moveState == 0)
+            trace = new Trace(R.mipmap.trace, positionX, 1);
+        else
+            trace = new Trace(R.mipmap.trace, positionX, 0);
+        Scene scene = Scene.top();
+        scene.add(MainScene.Layer.LAYER3, trace);
 
         // 이동 입력 시 잠시 입력을 무시한다.
         moveEnabled = false;
@@ -113,7 +127,7 @@ public class Player extends Sprite implements IBoxCollidable {
         // 목표 지점에 도달하면 입력을 다시 받는다.
         // 왼쪽 이동
         if(moveState == 0) {
-            positionX -= unit * GameView.frameTime * 4.0f;
+            positionX -= GameView.frameTime * unit * 4.0f;
             if(positionX < destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
@@ -122,7 +136,7 @@ public class Player extends Sprite implements IBoxCollidable {
 
         // 오른쪽 이동
         else if(moveState == 1) {
-            positionX += unit * GameView.frameTime * 4.0f;
+            positionX += GameView.frameTime * unit * 4.0f;
             if(positionX > destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
@@ -144,7 +158,9 @@ public class Player extends Sprite implements IBoxCollidable {
             sinNum = 0.0f;
         }
 
-        setPosition(positionX, positionY + heightOffset, unit * 0.5f, unit * 0.5f * spriteRatio);
+        setPosition(positionX + MainScene.camera.shakeResultX,
+                positionY + heightOffset+ MainScene.camera.shakeResultY,
+                unit * 0.5f, unit * 0.5f * spriteRatio);
     }
 
     public float getPosition() {

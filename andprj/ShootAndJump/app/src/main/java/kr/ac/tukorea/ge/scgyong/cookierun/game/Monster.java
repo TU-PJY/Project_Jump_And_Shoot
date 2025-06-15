@@ -69,6 +69,8 @@ public class Monster extends Sprite implements IBoxCollidable {
 
         // 가로세로가 동일하므로 그냥 그린다.
         // 0.5, 0.5 scale로 그린다.
-        setPosition(positionX, positionY, unit * 0.25f, unit * 0.25f);
+        setPosition(positionX + MainScene.camera.shakeResultX,
+                positionY + MainScene.camera.shakeResultY,
+                unit * 0.25f, unit * 0.25f);
     }
 }
