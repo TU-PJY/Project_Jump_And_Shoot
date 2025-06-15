@@ -29,6 +29,10 @@ public class Monster extends Sprite implements IBoxCollidable {
 
     private final RectF collisionRect = new RectF();
 
+
+    private float sizeOffset;
+    private float sizeNum;
+
     public Monster(int mipmapId, float createPositionX) {
         super(mipmapId);
 
@@ -63,6 +67,7 @@ public class Monster extends Sprite implements IBoxCollidable {
         // 체력이 0이 될 경우 스스로 삭제
         if(HP == 0) {
             dead = true;
+            sizeOffset = 0.0f;
 
             if(moveDirection == 1)
                 setImageResourceId(R.mipmap.monster_dead_right);
@@ -98,6 +103,9 @@ public class Monster extends Sprite implements IBoxCollidable {
                 positionX -= GameView.frameTime * Metrics.unit;
             else
                 positionX += GameView.frameTime * Metrics.unit;
+
+            sizeNum += GameView.frameTime * 10.0f;
+            sizeOffset = (float)Math.sin(sizeNum) * Metrics.unit * 0.02f;
         }
 
         collisionRect.set
@@ -110,8 +118,8 @@ public class Monster extends Sprite implements IBoxCollidable {
 
         setPosition(
                 positionX + MainScene.camera.shakeResultX,
-                positionY + MainScene.camera.shakeResultY,
-                Metrics.unit * 0.25f,  Metrics.unit * 0.25f
+                positionY + MainScene.camera.shakeResultY - sizeOffset * 0.5f,
+                Metrics.unit * 0.25f,  Metrics.unit * 0.25f + sizeOffset * 0.5f
         );
     }
 }

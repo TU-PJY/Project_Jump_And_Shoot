@@ -49,6 +49,11 @@ public class Player extends Sprite implements IBoxCollidable {
     private int moveCount = 0;
 
     float spriteRatio = 0.0f;
+
+    // 플레이어 숨쉬기 애니메이션 변수
+    private float sizeOffset;
+    private float sizeNum;
+
     public Player(int mipmapId) {
         super(mipmapId);
 
@@ -151,10 +156,13 @@ public class Player extends Sprite implements IBoxCollidable {
             sinNum = 0.0f;
         }
 
+        sizeNum += GameView.frameTime * 4.0f;
+        sizeOffset = (float)Math.sin(sizeNum) * Metrics.unit * 0.01f;
+
         setPosition(
                 positionX + MainScene.camera.shakeResultX,
-                positionY + heightOffset+ MainScene.camera.shakeResultY,
-                Metrics.unit * 0.5f, Metrics.unit * 0.5f * spriteRatio
+                positionY + heightOffset+ MainScene.camera.shakeResultY - sizeOffset * 0.5f,
+                Metrics.unit * 0.5f, Metrics.unit * 0.5f * spriteRatio + sizeOffset
         );
     }
 
