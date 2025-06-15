@@ -28,6 +28,10 @@ public class Player extends Sprite implements IBoxCollidable {
     private float positionX = screenWidth * 0.5f;
     private float positionY = screenHeight * 0.8f;
 
+    // 플레이어 높이 오프셋
+    private float heightOffset;
+    private float sinNum;
+
     // 플레이어 최종 이동 위치
     private float destPositionX = positionX;
 
@@ -45,7 +49,7 @@ public class Player extends Sprite implements IBoxCollidable {
     private int prevMoveState = -1;
 
     // 플레이어 이동 가능 횟수
-    // -2 ~ 2 가능
+    // -1 ~ 1 가능
     private int moveCount = 0;
 
     float spriteRatio = 0.0f;
@@ -71,22 +75,23 @@ public class Player extends Sprite implements IBoxCollidable {
         // 스프라이트 크기는 같으므로 방향이 달라질때마다 스프라이트를 교체한다.
         // 방향이 달라질때만 새로운 스프라이트를 요정한다.
         if (touchType == 0)  {
-            if(moveCount >= 2)
+            if(moveCount >= 1)
                 return;
 
-            destPositionX += unit * 0.8f;
+            destPositionX += unit * 1.5f;
             moveState = 1;
             moveCount ++;
+
             if(prevMoveState != moveState) {
                 setImageResourceId(R.mipmap.commando_left);
                 prevMoveState = moveState;
             }
         }
         else if(touchType == 1) {
-            if(moveCount <= -2)
+            if(moveCount <= -1)
                 return;
 
-            destPositionX -= unit * 0.8f;
+            destPositionX -= unit * 1.5f;
             moveState = 0;
             moveCount --;
             if(prevMoveState != moveState) {
@@ -104,7 +109,7 @@ public class Player extends Sprite implements IBoxCollidable {
         // 목표 지점에 도달하면 입력을 다시 받는다.
         // 왼쪽 이동
         if(moveState == 0) {
-            positionX -= 1000.0f * GameView.frameTime * 2.0f;
+            positionX -= 1000.0f * GameView.frameTime * 2.0;
             if(positionX < destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
@@ -113,14 +118,30 @@ public class Player extends Sprite implements IBoxCollidable {
 
         // 오른쪽 이동
         else if(moveState == 1) {
-            positionX += 1000.0f * GameView.frameTime * 2.0f;
+            positionX += 1000.0f * GameView.frameTime * 2.0;
             if(positionX > destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
             }
         }
 
-        setPosition(positionX, positionY, unit * 0.5f, unit * 0.5f * spriteRatio);
+        // 이동 중에는 점프
+        if(!moveEnabled) {
+            float totalMove = unit * 1.5f;
+            float moved = Math.abs(destPositionX - positionX);
+            float progress = moved / totalMove;
+            if(progress > 1.0f) progress = 1.0f;
+
+            sinNum = progress * (float)Math.PI;
+            heightOffset = -(float)Math.sin(sinNum) * unit * 1.0f;
+        }
+        else {
+            heightOffset = 0.0f;
+            sinNum = 0.0f;
+        }
+
+
+        setPosition(positionX, positionY + heightOffset, unit * 0.5f, unit * 0.5f * spriteRatio);
     }
 
     @Override
