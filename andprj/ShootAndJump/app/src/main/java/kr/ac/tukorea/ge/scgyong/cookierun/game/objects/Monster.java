@@ -22,7 +22,7 @@ public class Monster extends Sprite implements IBoxCollidable {
     int prevDirection = -1;
 
     // 몬스터 체력
-    public int HP = 2;
+    public int HP = 1;
 
     public boolean dead;
     private float removeTimer;
@@ -46,8 +46,10 @@ public class Monster extends Sprite implements IBoxCollidable {
             return;
         HP -= Value;
         Sound.playEffect(R.raw.hit);
-        if(HP == 0)
+        if(HP == 0) {
             Sound.playEffect((R.raw.monster_sound1));
+            MainScene.gameScore.addScore();
+        }
 
     }
 
