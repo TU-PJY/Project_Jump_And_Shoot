@@ -3,9 +3,12 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
@@ -53,6 +56,11 @@ public class Player extends Sprite implements IBoxCollidable {
     // 플레이어 숨쉬기 애니메이션 변수
     private float sizeOffset;
     private float sizeNum;
+
+    // 플레이어 체력
+    public int HP = 3;
+    private boolean damageIgnore;
+    private float damageCooltime;
 
     public Player(int mipmapId) {
         super(mipmapId);
@@ -158,6 +166,45 @@ public class Player extends Sprite implements IBoxCollidable {
 
         sizeNum += GameView.frameTime * 4.0f;
         sizeOffset = (float)Math.sin(sizeNum) * Metrics.unit * 0.01f;
+
+        collisionRect.set(
+                positionX - Metrics.unit * 0.06f,
+                positionY - Metrics.unit * 0.06f,
+                positionX + Metrics.unit * 0.06f,
+                positionY + Metrics.unit * 0.06f
+        );
+
+        // 몬스터 접촉 시 체력 감소 후 쿨타임 1초 설정
+        if(!damageIgnore && moveEnabled) {
+            Scene scene = Scene.top();
+            ArrayList<IGameObject> objects = scene.objectsAt(MainScene.Layer.LAYER1);
+            for (IGameObject obj : objects) {
+                if (obj instanceof Monster) {
+                    Monster monster = (Monster) obj;
+                    if (collisionRect.intersect((monster.getCollisionRect()))) {
+                        if (!monster.dead) {
+                            monster.setAttackAnimation();
+
+                            HP--;
+                            if (HP < 0)
+                                HP = 0;
+
+                            damageIgnore = true;
+                            damageCooltime = 1.0f;
+                            MainScene.camera.AddShake(0.05f);
+                        }
+                    }
+                }
+            }
+        }
+
+        else {
+            damageCooltime -= GameView.frameTime;
+            if(damageCooltime <= 0.0f) {
+                damageCooltime = 0.0f;
+                damageIgnore = false;
+            }
+        }
 
         setPosition(
                 positionX + MainScene.camera.shakeResultX,

@@ -33,6 +33,8 @@ public class Monster extends Sprite implements IBoxCollidable {
     private float sizeOffset;
     private float sizeNum;
 
+    private float sizeOffset2;
+
     public Monster(int mipmapId, float createPositionX) {
         super(mipmapId);
 
@@ -54,7 +56,10 @@ public class Monster extends Sprite implements IBoxCollidable {
             Sound.playEffect((R.raw.monster_sound1));
             MainScene.gameScore.addScore();
         }
+    }
 
+    public void setAttackAnimation() {
+        sizeOffset2 = Metrics.unit * 0.2f;
     }
 
     @Override
@@ -68,6 +73,7 @@ public class Monster extends Sprite implements IBoxCollidable {
         if(HP == 0) {
             dead = true;
             sizeOffset = 0.0f;
+            sizeOffset2 = 0.0f;
 
             if(moveDirection == 1)
                 setImageResourceId(R.mipmap.monster_dead_right);
@@ -106,20 +112,21 @@ public class Monster extends Sprite implements IBoxCollidable {
 
             sizeNum += GameView.frameTime * 10.0f;
             sizeOffset = (float)Math.sin(sizeNum) * Metrics.unit * 0.02f;
+            sizeOffset2 = sizeOffset2 + (0.0f - sizeOffset2) * GameView.frameTime * 10.0f;
         }
 
         collisionRect.set
                 (
-                        positionX -  Metrics.unit * 0.125f,
-                        positionY -  Metrics.unit * 0.125f,
-                        positionX +  Metrics.unit * 0.125f,
-                        positionY +  Metrics.unit * 0.125f
+                        positionX -  Metrics.unit * 0.06f,
+                        positionY -  Metrics.unit * 0.06f,
+                        positionX +  Metrics.unit * 0.06f,
+                        positionY +  Metrics.unit * 0.06f
                 );
 
         setPosition(
                 positionX + MainScene.camera.shakeResultX,
-                positionY + MainScene.camera.shakeResultY - sizeOffset * 0.5f,
-                Metrics.unit * 0.25f,  Metrics.unit * 0.25f + sizeOffset * 0.5f
+                positionY + MainScene.camera.shakeResultY - sizeOffset * 0.5f - sizeOffset2 * 0.5f,
+                Metrics.unit * 0.25f,  Metrics.unit * 0.25f + sizeOffset + sizeOffset2
         );
     }
 }
