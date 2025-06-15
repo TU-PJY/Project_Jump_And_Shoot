@@ -52,8 +52,8 @@ public class HP implements IGameObject {
         if(drawEnabled) {
             if (!targetMonster.dead) {
                 for (int i = 0; i < targetMonster.HP; i++) {
-                    float renderPositionX = positionX - Metrics.unit * 0.025f + Metrics.unit * 0.07f * i;
-                    renderPositionX -= Metrics.unit * 0.025f * (float) targetMonster.HP / 2.0f;
+                    float renderPositionX = positionX - Metrics.unit * 0.04f * (float)(targetMonster.HP - 1);
+                    renderPositionX += i * Metrics.unit * 0.08f;
 
                     back.setPosition(
                             renderPositionX + MainScene.camera.shakeResultX,
