@@ -26,6 +26,8 @@ public class Monster extends Sprite implements IBoxCollidable {
     // 몬스터 이미지
     Bitmap currentImage;
 
+    private final RectF collisionRect = new RectF();
+
     public Monster(int mipmapId, float createPositionX) {
         super(mipmapId);
         currentImage = BitmapPool.get(mipmapId);
@@ -39,7 +41,7 @@ public class Monster extends Sprite implements IBoxCollidable {
 
     @Override
     public RectF getCollisionRect() {
-        return null;
+        return collisionRect;
     }
 
     @Override
@@ -66,6 +68,14 @@ public class Monster extends Sprite implements IBoxCollidable {
             positionX -= GameView.frameTime * unit;
         else
             positionX += GameView.frameTime * unit;
+
+        collisionRect.set
+                (
+                        positionX - unit * 0.125f,
+                        positionY - unit * 0.125f,
+                        positionX + unit * 0.125f,
+                        positionY + unit * 0.125f
+                );
 
         // 가로세로가 동일하므로 그냥 그린다.
         // 0.5, 0.5 scale로 그린다.

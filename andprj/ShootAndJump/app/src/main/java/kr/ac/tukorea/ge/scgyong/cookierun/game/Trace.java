@@ -2,9 +2,13 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 
 import android.graphics.Bitmap;
 import android.graphics.RectF;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
@@ -20,6 +24,8 @@ public class Trace extends Sprite implements IBoxCollidable  {
     private float screenHeight = Metrics.height;
     private float unit = screenHeight * 0.5f;
     private int moveDirection;
+
+    private final RectF collisionRect = new RectF();
 
 
     public Trace(int mipmapId, float createPositionX, int direction) {
@@ -41,8 +47,30 @@ public class Trace extends Sprite implements IBoxCollidable  {
         else
             positionX += GameView.frameTime * unit * 5.0f;
 
-        if(positionX > screenWidth + unit * 0.5 || positionX < - unit * 0.5) {
-            Scene scene = Scene.top();
+        collisionRect.set
+                (
+                        positionX - unit * 0.05f,
+                        positionY - unit * 0.05f,
+                        positionX + unit * 0.05f,
+                        positionY + unit * 0.05f
+                );
+
+        Scene scene = Scene.top();
+
+        // 몬스터 명중 시 몬스터 삭제 후 스스로 삭제
+        ArrayList<IGameObject> objects = scene.objectsAt(MainScene.Layer.LAYER1);
+        for (IGameObject obj : objects) {
+            if (obj instanceof Monster) {
+                Monster monster = (Monster) obj;
+                if (collisionRect.intersect((monster.getCollisionRect()))) {
+                    scene.remove(MainScene.Layer.LAYER1, monster);
+                    scene.remove(MainScene.Layer.LAYER3, this);
+                    return;
+                }
+            }
+        }
+
+        if(positionX > screenWidth + unit * 0.05 || positionX < - unit * 0.05) {
             scene.remove(MainScene.Layer.LAYER3, this);
         }
 
@@ -53,6 +81,6 @@ public class Trace extends Sprite implements IBoxCollidable  {
 
     @Override
     public RectF getCollisionRect() {
-        return null;
+        return collisionRect;
     }
 }
