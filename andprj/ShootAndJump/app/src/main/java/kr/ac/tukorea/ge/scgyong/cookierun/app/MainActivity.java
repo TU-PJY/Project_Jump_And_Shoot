@@ -6,7 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.scgyong.cookierun.databinding.ActivityMainBinding;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding ui;

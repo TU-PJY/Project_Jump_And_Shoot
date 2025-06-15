@@ -1,6 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
-
-import android.graphics.Canvas;
+package kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;

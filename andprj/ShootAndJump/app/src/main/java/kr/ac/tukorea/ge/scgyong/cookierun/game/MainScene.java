@@ -3,12 +3,12 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
-import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Background;
-import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Camera;
-import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.GameScore;
-import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.MonsterGenerator;
-import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Player;
-import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.PlayerHP;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects.Background;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects.Camera;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects.GameScore;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects.MonsterGenerator;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects.Player;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects.PlayerHP;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
@@ -29,12 +29,6 @@ public class MainScene extends Scene {
 
     public MainScene() {
         initLayers(Layer.COUNT);
-
-        Sound.loadSound(R.raw.m1);
-        Sound.loadSound(R.raw.hurt);
-        Sound.loadSound(R.raw.monster_sound1);
-        Sound.loadSound(R.raw.hit);
-        Sound.loadSound(R.raw.next_round);
 
         camera = new Camera();
         background = new Background(R.mipmap.background);

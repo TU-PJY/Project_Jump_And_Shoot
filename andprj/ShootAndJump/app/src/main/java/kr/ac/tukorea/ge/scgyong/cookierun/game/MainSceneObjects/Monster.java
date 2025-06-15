@@ -1,19 +1,17 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
+package kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects;
 
-import android.graphics.Bitmap;
 import android.graphics.RectF;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
-public class BigMonster extends Sprite implements IBoxCollidable {
+public class Monster extends Sprite implements IBoxCollidable {
     public float positionX;
     public float positionY;
 
@@ -22,26 +20,25 @@ public class BigMonster extends Sprite implements IBoxCollidable {
     int prevDirection = -1;
 
     // 몬스터 체력
-    public int HP = 2;
+    public int HP = 1;
 
     public boolean dead;
     private float removeTimer;
 
     private final RectF collisionRect = new RectF();
 
+
     private float sizeOffset;
     private float sizeNum;
 
     private float sizeOffset2;
 
-    private float heightOffset;
-
-    public BigMonster(int mipmapId, float createPositionX) {
+    public Monster(int mipmapId, float createPositionX) {
         super(mipmapId);
 
         // 생성자에서 입력받는 위치로 몬스터 스폰
         positionX = Metrics.cvtX(createPositionX);
-        positionY = Metrics.cvtY(0.24f);
+        positionY = Metrics.cvtY(0.3f);
 
         HP hp = new HP(R.mipmap.hp_indicator, this);
         Scene scene = Scene.top();
@@ -75,12 +72,11 @@ public class BigMonster extends Sprite implements IBoxCollidable {
             dead = true;
             sizeOffset = 0.0f;
             sizeOffset2 = 0.0f;
-            heightOffset = Metrics.unit * 0.1f;
 
             if(moveDirection == 1)
-                setImageResourceId(R.mipmap.monster_big_dead_right);
+                setImageResourceId(R.mipmap.monster_dead_right);
             else
-                setImageResourceId(R.mipmap.monster_big_dead_left);
+                setImageResourceId(R.mipmap.monster_dead_left);
 
             removeTimer += GameView.frameTime;
             if(removeTimer >= 1.0) {
@@ -96,21 +92,21 @@ public class BigMonster extends Sprite implements IBoxCollidable {
             if (positionX < destPosition) {
                 moveDirection = 1;
                 if (prevDirection != moveDirection) {
-                    setImageResourceId(R.mipmap.monster_big_right);
+                    setImageResourceId(R.mipmap.monster_right);
                     prevDirection = moveDirection;
                 }
             } else if (positionX > destPosition) {
                 moveDirection = 0;
                 if (prevDirection != moveDirection) {
-                    setImageResourceId(R.mipmap.monster_big_left);
+                    setImageResourceId(R.mipmap.monster_left);
                     prevDirection = moveDirection;
                 }
             }
 
             if (moveDirection == 0)
-                positionX -= GameView.frameTime * Metrics.unit * 0.5f;
+                positionX -= GameView.frameTime * Metrics.unit * 0.8f;
             else
-                positionX += GameView.frameTime * Metrics.unit * 0.5f;
+                positionX += GameView.frameTime * Metrics.unit * 0.8f;
 
             sizeNum += GameView.frameTime * 10.0f;
             sizeOffset = (float)Math.sin(sizeNum) * Metrics.unit * 0.02f;
@@ -119,16 +115,16 @@ public class BigMonster extends Sprite implements IBoxCollidable {
 
         collisionRect.set
                 (
-                        positionX -  Metrics.unit * 0.1f,
-                        positionY -  Metrics.unit * 0.1f,
-                        positionX +  Metrics.unit * 0.1f,
-                        positionY +  Metrics.unit * 0.1f
+                        positionX -  Metrics.unit * 0.06f,
+                        positionY -  Metrics.unit * 0.06f,
+                        positionX +  Metrics.unit * 0.06f,
+                        positionY +  Metrics.unit * 0.06f
                 );
 
         setPosition(
                 positionX + MainScene.camera.shakeResultX,
-                positionY + MainScene.camera.shakeResultY - sizeOffset * 0.5f - sizeOffset2 * 0.5f + heightOffset,
-                Metrics.unit * 0.35f,  Metrics.unit * 0.35f + sizeOffset + sizeOffset2
+                positionY + MainScene.camera.shakeResultY - sizeOffset * 0.5f - sizeOffset2 * 0.5f,
+                Metrics.unit * 0.25f,  Metrics.unit * 0.25f + sizeOffset + sizeOffset2
         );
     }
 }

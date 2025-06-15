@@ -1,6 +1,5 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
+package kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects;
 
-import android.graphics.Bitmap;
 import android.graphics.RectF;
 
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;

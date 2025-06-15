@@ -1,16 +1,15 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
+package kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects;
 
-import android.graphics.Bitmap;
 import android.graphics.RectF;
 
 import java.util.ArrayList;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.GameoverScene;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
@@ -37,9 +36,6 @@ public class Player extends Sprite implements IBoxCollidable {
 
     // 플레이어 이동 입력 가능 여부
     private boolean moveEnabled = true;
-
-    // 플레이어 이미지
-    Bitmap currentImage;
 
     // 플레이어 이동 상태
     // 0: left, 1: right
@@ -185,10 +181,12 @@ public class Player extends Sprite implements IBoxCollidable {
                         if (!monster.dead) {
                             monster.setAttackAnimation();
 
+                            // HP가 0이 될 경우 게임 오버 된다.
                             HP--;
-                            Sound.playEffect(R.raw.hurt);
-                            if (HP < 0)
-                                HP = 0;
+                            if (HP > 0)
+                                Sound.playEffect(R.raw.hurt);
+                            else
+                                switchToGameoverScreen(scene);
 
                             damageIgnore = true;
                             damageCooltime = 1.0f;
@@ -205,10 +203,12 @@ public class Player extends Sprite implements IBoxCollidable {
                         if (!monster.dead) {
                             monster.setAttackAnimation();
 
+                            // HP가 0이 될 경우 게임 오버 된다.
                             HP--;
-                            Sound.playEffect(R.raw.hurt);
-                            if (HP < 0)
-                                HP = 0;
+                            if (HP > 0)
+                                Sound.playEffect(R.raw.hurt);
+                            else
+                                switchToGameoverScreen(scene);
 
                             damageIgnore = true;
                             damageCooltime = 1.0f;
@@ -234,6 +234,15 @@ public class Player extends Sprite implements IBoxCollidable {
                 positionY + heightOffset+ MainScene.camera.shakeResultY - sizeOffset * 0.5f,
                 Metrics.unit * 0.5f, Metrics.unit * 0.5f * spriteRatio + sizeOffset
         );
+    }
+
+    public void switchToGameoverScreen(Scene scene) {
+        scene.globalScore = MainScene.gameScore.score;
+        Sound.stopMusic();
+        Sound.playEffect(R.raw.player_dead);
+        Sound.playMusic(R.raw.gameover_bgm);
+        GameoverScene gameoverScene = new GameoverScene();
+        gameoverScene.change();
     }
 
     public float getPosition() {

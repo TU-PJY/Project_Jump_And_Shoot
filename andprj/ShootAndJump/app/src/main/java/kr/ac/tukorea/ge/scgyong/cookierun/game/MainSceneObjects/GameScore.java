@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
+package kr.ac.tukorea.ge.scgyong.cookierun.game.MainSceneObjects;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
@@ -14,7 +14,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 public class GameScore implements IGameObject {
 
     private int startScore;
-    private int score;
+    public int score;
     private int round = 1;
     private Paint paint;
 

@@ -19,6 +19,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Scene {
+    public int globalScore;
+
     private static final String TAG = Scene.class.getSimpleName();
     protected ArrayList<ArrayList<IGameObject>> layers = new ArrayList<>();
     //////////////////////////////////////////////////
