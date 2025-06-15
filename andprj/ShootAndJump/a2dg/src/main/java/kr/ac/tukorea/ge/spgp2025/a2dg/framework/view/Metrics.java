@@ -1,9 +1,12 @@
 package kr.ac.tukorea.ge.spgp2025.a2dg.framework.view;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 
 public class Metrics {
     private static final String TAG = Metrics.class.getSimpleName();

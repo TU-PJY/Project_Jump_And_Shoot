@@ -1,7 +1,10 @@
 package kr.ac.tukorea.ge.scgyong.cookierun.app;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.BuildConfig;
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
@@ -16,6 +19,17 @@ public class GameActivity extends kr.ac.tukorea.ge.spgp2025.a2dg.framework.activ
       //  GameView.drawsDebugStuffs = BuildConfig.DEBUG;
         Metrics.setGameSize(1600, 900);
         super.onCreate(savedInstanceState);
+
+        Context context = GameView.view.getContext();
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if (wm != null) {
+            wm.getDefaultDisplay().getRealMetrics(dm); // API 17+
+            int screenWidth = dm.widthPixels;
+            int screenHeight = dm.heightPixels;
+            Metrics.onSize(screenWidth, screenHeight);
+            Log.d("ScreenSize", "Width: " + screenWidth + ", Height: " + screenHeight);
+        }
 
         // 사운드 미리 로드
         Sound.loadSound(R.raw.m1);
