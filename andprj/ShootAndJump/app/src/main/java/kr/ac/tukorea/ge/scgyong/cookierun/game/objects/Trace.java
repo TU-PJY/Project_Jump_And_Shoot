@@ -63,6 +63,17 @@ public class Trace extends Sprite implements IBoxCollidable  {
                     }
                 }
             }
+
+            if (obj instanceof BigMonster) {
+                BigMonster monster = (BigMonster) obj;
+                if (collisionRect.intersect((monster.getCollisionRect()))) {
+                    if(!monster.dead) {
+                        monster.giveDamage(1);
+                        scene.remove(MainScene.Layer.LAYER3, this);
+                        return;
+                    }
+                }
+            }
         }
 
         if(positionX > screenWidth + unit * 0.05 || positionX < - unit * 0.05) {

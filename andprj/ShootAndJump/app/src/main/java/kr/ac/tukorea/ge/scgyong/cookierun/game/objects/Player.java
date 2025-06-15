@@ -58,7 +58,7 @@ public class Player extends Sprite implements IBoxCollidable {
     private float sizeNum;
 
     // 플레이어 체력
-    public int HP = 3;
+    public int HP = 5;
     private boolean damageIgnore;
     private float damageCooltime;
 
@@ -186,12 +186,35 @@ public class Player extends Sprite implements IBoxCollidable {
                             monster.setAttackAnimation();
 
                             HP--;
+                            Sound.playEffect(R.raw.hurt);
                             if (HP < 0)
                                 HP = 0;
 
                             damageIgnore = true;
                             damageCooltime = 1.0f;
                             MainScene.camera.AddShake(0.05f);
+
+                            break;
+                        }
+                    }
+                }
+
+                if (obj instanceof BigMonster) {
+                    BigMonster monster = (BigMonster) obj;
+                    if (collisionRect.intersect((monster.getCollisionRect()))) {
+                        if (!monster.dead) {
+                            monster.setAttackAnimation();
+
+                            HP--;
+                            Sound.playEffect(R.raw.hurt);
+                            if (HP < 0)
+                                HP = 0;
+
+                            damageIgnore = true;
+                            damageCooltime = 1.0f;
+                            MainScene.camera.AddShake(0.05f);
+
+                            break;
                         }
                     }
                 }

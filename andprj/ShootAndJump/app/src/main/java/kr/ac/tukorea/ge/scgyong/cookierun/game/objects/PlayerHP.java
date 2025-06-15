@@ -28,15 +28,15 @@ public class PlayerHP implements IGameObject {
         if(drawEnable) {
             for (int i = 0; i < HP; i++) {
                 back.setPosition(
-                        Metrics.cvtX(Metrics.ASP(-0.9f + i * 0.07f)),
-                        Metrics.cvtY(-0.9f),
+                        Metrics.cvtX(Metrics.ASP(-0.9f + i * 0.07f)) + MainScene.camera.shakeResultX,
+                        Metrics.cvtY(-0.9f) + MainScene.camera.shakeResultY,
                         Metrics.unit * 0.1f,
                         Metrics.unit * 0.1f
                         );
 
                 front.setPosition(
-                        Metrics.cvtX(Metrics.ASP(-0.9f + i * 0.07f)),
-                        Metrics.cvtY(-0.9f),
+                        Metrics.cvtX(Metrics.ASP(-0.9f + i * 0.07f)) + MainScene.camera.shakeResultX,
+                        Metrics.cvtY(-0.9f) + MainScene.camera.shakeResultY,
                         Metrics.unit * 0.08f,
                         Metrics.unit * 0.08f
                         );

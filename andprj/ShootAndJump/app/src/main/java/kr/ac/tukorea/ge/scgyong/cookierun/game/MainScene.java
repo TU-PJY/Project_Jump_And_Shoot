@@ -30,6 +30,12 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.COUNT);
 
+        Sound.loadSound(R.raw.m1);
+        Sound.loadSound(R.raw.hurt);
+        Sound.loadSound(R.raw.monster_sound1);
+        Sound.loadSound(R.raw.hit);
+        Sound.loadSound(R.raw.next_round);
+
         camera = new Camera();
         background = new Background(R.mipmap.background);
         generator = new MonsterGenerator();

@@ -17,11 +17,14 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class HP implements IGameObject {
     Monster targetMonster;
+    BigMonster targetBigMonster;
 
     private float positionX;
     private float positionY;
     Sprite front;
     Sprite back;
+
+    private boolean targetBig;
 
 
     boolean drawEnabled;
@@ -33,42 +36,87 @@ public class HP implements IGameObject {
         targetMonster = monsterInstance;
     }
 
+    public HP(int mipmapId, BigMonster monsterInstance) {
+        front = new Sprite(mipmapId);
+        back = new Sprite(R.mipmap.hp_indicator_back);
+        targetBigMonster = monsterInstance;
+        targetBig = true;
+    }
+
     @Override
     public void update() {
         // 추적 대상 몬스터가 더 이상 존재하지 않으면 스스로 삭제한다.
-        if(!targetMonster.dead) {
-            positionX = targetMonster.positionX;
-            positionY = targetMonster.positionY - Metrics.unit * 0.25f;
+        if(!targetBig) {
+            if (!targetMonster.dead) {
+                positionX = targetMonster.positionX;
+                positionY = targetMonster.positionY - Metrics.unit * 0.25f;
+            }
+            else {
+                Scene scene = Scene.top();
+                scene.remove(MainScene.Layer.LAYER1, this);
+            }
         }
 
         else {
-            Scene scene = Scene.top();
-            scene.remove(MainScene.Layer.LAYER1, this);
+            if (!targetBigMonster.dead) {
+                positionX = targetBigMonster.positionX;
+                positionY = targetBigMonster.positionY - Metrics.unit * 0.25f;
+            }
+            else {
+                Scene scene = Scene.top();
+                scene.remove(MainScene.Layer.LAYER1, this);
+            }
         }
     }
 
     @Override
     public void draw(Canvas canvas) {
         if(drawEnabled) {
-            if (!targetMonster.dead) {
-                for (int i = 0; i < targetMonster.HP; i++) {
-                    float renderPositionX = positionX - Metrics.unit * 0.04f * (float)(targetMonster.HP - 1);
-                    renderPositionX += i * Metrics.unit * 0.08f;
+            if(!targetBig) {
+                if (!targetMonster.dead) {
+                    for (int i = 0; i < targetMonster.HP; i++) {
+                        float renderPositionX = positionX - Metrics.unit * 0.04f * (float) (targetMonster.HP - 1);
+                        renderPositionX += i * Metrics.unit * 0.08f;
 
-                    back.setPosition(
-                            renderPositionX + MainScene.camera.shakeResultX,
-                            positionY + MainScene.camera.shakeResultY,
-                            Metrics.unit * 0.07f, Metrics.unit * 0.07f
-                    );
+                        back.setPosition(
+                                renderPositionX + MainScene.camera.shakeResultX,
+                                positionY + MainScene.camera.shakeResultY,
+                                Metrics.unit * 0.07f, Metrics.unit * 0.07f
+                        );
 
-                    front.setPosition(
-                            renderPositionX + MainScene.camera.shakeResultX,
-                            positionY + MainScene.camera.shakeResultY,
-                            Metrics.unit * 0.05f, Metrics.unit * 0.05f
-                    );
+                        front.setPosition(
+                                renderPositionX + MainScene.camera.shakeResultX,
+                                positionY + MainScene.camera.shakeResultY,
+                                Metrics.unit * 0.05f, Metrics.unit * 0.05f
+                        );
 
-                    back.draw(canvas);
-                    front.draw(canvas);
+                        back.draw(canvas);
+                        front.draw(canvas);
+                    }
+                }
+            }
+
+            else {
+                if (!targetBigMonster.dead) {
+                    for (int i = 0; i < targetBigMonster.HP; i++) {
+                        float renderPositionX = positionX - Metrics.unit * 0.04f * (float) (targetBigMonster.HP - 1);
+                        renderPositionX += i * Metrics.unit * 0.08f;
+
+                        back.setPosition(
+                                renderPositionX + MainScene.camera.shakeResultX,
+                                positionY + MainScene.camera.shakeResultY,
+                                Metrics.unit * 0.07f, Metrics.unit * 0.07f
+                        );
+
+                        front.setPosition(
+                                renderPositionX + MainScene.camera.shakeResultX,
+                                positionY + MainScene.camera.shakeResultY,
+                                Metrics.unit * 0.05f, Metrics.unit * 0.05f
+                        );
+
+                        back.draw(canvas);
+                        front.draw(canvas);
+                    }
                 }
             }
         }
