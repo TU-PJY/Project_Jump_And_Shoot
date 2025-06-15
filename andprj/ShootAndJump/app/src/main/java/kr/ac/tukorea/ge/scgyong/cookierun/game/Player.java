@@ -7,6 +7,7 @@ import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
@@ -87,6 +88,7 @@ public class Player extends Sprite implements IBoxCollidable {
                 prevMoveState = moveState;
             }
         }
+
         else if(touchType == 1) {
             if(moveCount <= -1)
                 return;
@@ -99,6 +101,8 @@ public class Player extends Sprite implements IBoxCollidable {
                 prevMoveState = moveState;
             }
         }
+
+        Sound.playEffect(R.raw.m1);
 
         // 이동 입력 시 잠시 입력을 무시한다.
         moveEnabled = false;
