@@ -21,15 +21,9 @@ public class Player extends Sprite implements IBoxCollidable {
 
     private Sprite sprite;
 
-    float screenWidth = Metrics.width;
-    float screenHeight = Metrics.height;
-
-    // DirectX, OpenGL 등에서 사용하는 1.0 크기 기준을 사용한다.
-    float unit = screenHeight * 0.5f;
-
     // 플레이어 위치
-    private float positionX = screenWidth * 0.5f;
-    private float positionY = screenHeight * 0.8f;
+    private float positionX;
+    private float positionY;
 
     // 플레이어 높이 오프셋
     private float heightOffset;
@@ -62,11 +56,11 @@ public class Player extends Sprite implements IBoxCollidable {
 
         float spriteWidth = bitmap.getWidth();
         float spriteHeight = bitmap.getHeight();
-        spriteRatio = spriteHeight / spriteWidth;
+        positionX = Metrics.cvtX(0.0f);
+        positionY = Metrics.cvtY(0.3f);
+        destPositionX = positionX;
 
-        // 가로가 더 기므로 세로 길이를 줄인다.
-        // 0.5, 0.5 scale로 그린다.
-        setPosition(positionX, positionY, unit * 0.5f, unit * 0.5f * spriteRatio);
+        spriteRatio = spriteHeight / spriteWidth;
     }
 
     // 0: left touch  1: right touch
@@ -81,7 +75,7 @@ public class Player extends Sprite implements IBoxCollidable {
             if(moveCount >= 1)
                 return;
 
-            destPositionX += unit * 1.5f;
+            destPositionX += Metrics.unit * 1.5f;
             moveState = 1;
             moveCount ++;
 
@@ -95,7 +89,7 @@ public class Player extends Sprite implements IBoxCollidable {
             if(moveCount <= -1)
                 return;
 
-            destPositionX -= unit * 1.5f;
+            destPositionX -= Metrics.unit * 1.5f;
             moveState = 0;
             moveCount --;
             if(prevMoveState != moveState) {
@@ -128,7 +122,7 @@ public class Player extends Sprite implements IBoxCollidable {
         // 목표 지점에 도달하면 입력을 다시 받는다.
         // 왼쪽 이동
         if(moveState == 0) {
-            positionX -= GameView.frameTime * unit * 4.0f;
+            positionX -= GameView.frameTime * Metrics.unit * 4.0f;
             if(positionX < destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
@@ -137,7 +131,7 @@ public class Player extends Sprite implements IBoxCollidable {
 
         // 오른쪽 이동
         else if(moveState == 1) {
-            positionX += GameView.frameTime * unit * 4.0f;
+            positionX += GameView.frameTime * Metrics.unit * 4.0f;
             if(positionX > destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
@@ -146,13 +140,13 @@ public class Player extends Sprite implements IBoxCollidable {
 
         // 이동 중에는 점프
         if(!moveEnabled) {
-            float totalMove = unit * 1.5f;
+            float totalMove = Metrics.unit * 1.5f;
             float moved = Math.abs(destPositionX - positionX);
             float progress = moved / totalMove;
             if(progress > 1.0f) progress = 1.0f;
 
             sinNum = progress * (float)Math.PI;
-            heightOffset = -(float)Math.sin(sinNum) * unit * 1.0f;
+            heightOffset = -(float)Math.sin(sinNum) * Metrics.unit * 1.0f;
         }
         else {
             heightOffset = 0.0f;
@@ -161,7 +155,7 @@ public class Player extends Sprite implements IBoxCollidable {
 
         setPosition(positionX + MainScene.camera.shakeResultX,
                 positionY + heightOffset+ MainScene.camera.shakeResultY,
-                unit * 0.5f, unit * 0.5f * spriteRatio);
+                Metrics.unit * 0.5f, Metrics.unit * 0.5f * spriteRatio);
     }
 
     public float getPosition() {

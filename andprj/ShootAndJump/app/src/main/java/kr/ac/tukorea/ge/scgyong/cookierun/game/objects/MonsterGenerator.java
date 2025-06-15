@@ -2,6 +2,8 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
 
 import android.graphics.Canvas;
 
+import java.util.Random;
+
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
@@ -14,6 +16,8 @@ public class MonsterGenerator implements IGameObject {
     private float spwanTime = 2.0f;
     float unit = Metrics.height * 0.5f;
 
+    Random rand = new Random();
+
     public MonsterGenerator() {
 
     }
@@ -25,7 +29,11 @@ public class MonsterGenerator implements IGameObject {
         if(currentTime >= spwanTime) {
             currentTime -= spwanTime;
             Monster monster;
-            monster = new Monster(R.mipmap.monster_left, 1.0f);
+            int randomFactor = rand.nextBoolean() ? 1 : -1;
+            if(randomFactor == 1)
+                monster = new Monster(R.mipmap.monster_left, Metrics.ASP(1.0f));
+            else
+                monster = new Monster(R.mipmap.monster_left, Metrics.ASP(-1.0f));
             Scene scene = Scene.top();
             scene.add(MainScene.Layer.LAYER1, monster);
         }

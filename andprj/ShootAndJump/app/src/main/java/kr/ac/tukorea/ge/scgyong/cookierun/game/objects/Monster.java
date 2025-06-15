@@ -8,23 +8,25 @@ import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class Monster extends Sprite implements IBoxCollidable {
-    private float positionX;
-    private float positionY;
+    public float positionX;
+    public float positionY;
 
     // 0: left, 1: right
     int moveDirection = 0;
     int prevDirection = -1;
 
-    float screenWidth = Metrics.width;
-    float screenHeight = Metrics.height;
-    float unit = screenHeight * 0.5f;
-
     // 몬스터 이미지
     Bitmap currentImage;
+
+    // 몬스터 체력
+    public int HP = 2;
+
+    public boolean dead;
 
     private final RectF collisionRect = new RectF();
 
@@ -33,10 +35,16 @@ public class Monster extends Sprite implements IBoxCollidable {
         currentImage = BitmapPool.get(mipmapId);
 
         // 생성자에서 입력받는 위치로 몬스터 스폰
-        positionX = screenWidth * createPositionX;
-        positionY = screenHeight * 0.8f;
+        positionX = Metrics.cvtX(createPositionX);
+        positionY = Metrics.cvtY(0.3f);
 
-        setPosition(positionX, positionY, unit * 0.25f, unit * 0.25f);
+        HP hp = new HP(R.mipmap.hp_indicator, this);
+        Scene scene = Scene.top();
+        scene.add(MainScene.Layer.LAYER1, hp);
+    }
+
+    public void giveDamage(int Value) {
+        HP -= Value;
     }
 
     @Override
@@ -46,6 +54,14 @@ public class Monster extends Sprite implements IBoxCollidable {
 
     @Override
     public void update() {
+        // 체력이 0이 될 경우 스스로 삭제
+        if(HP == 0) {
+            dead = true;
+            Scene scene = Scene.top();
+            scene.remove(MainScene.Layer.LAYER1, this);
+            return;
+        }
+
         // 플레이어 위치에 따라 몬스터 이동 방향이 달라진다.
         float destPosition = MainScene.player.getPosition();
         if(positionX < destPosition) {
@@ -65,22 +81,21 @@ public class Monster extends Sprite implements IBoxCollidable {
         }
 
         if(moveDirection == 0)
-            positionX -= GameView.frameTime * unit;
+            positionX -= GameView.frameTime * Metrics.unit;
         else
-            positionX += GameView.frameTime * unit;
+            positionX += GameView.frameTime * Metrics.unit;
 
         collisionRect.set
                 (
-                        positionX - unit * 0.125f,
-                        positionY - unit * 0.125f,
-                        positionX + unit * 0.125f,
-                        positionY + unit * 0.125f
+                        positionX -  Metrics.unit * 0.125f,
+                        positionY -  Metrics.unit * 0.125f,
+                        positionX +  Metrics.unit * 0.125f,
+                        positionY +  Metrics.unit * 0.125f
                 );
 
         // 가로세로가 동일하므로 그냥 그린다.
-        // 0.5, 0.5 scale로 그린다.
         setPosition(positionX + MainScene.camera.shakeResultX,
                 positionY + MainScene.camera.shakeResultY,
-                unit * 0.25f, unit * 0.25f);
+                Metrics.unit * 0.25f,  Metrics.unit * 0.25f);
     }
 }

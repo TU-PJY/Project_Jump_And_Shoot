@@ -15,7 +15,19 @@ public class Metrics {
     private static final Matrix transformMatrix = new Matrix();
     private static final Matrix invertedMatrix = new Matrix();
     private static final float[] pointsBuffer = new float[2];
+    public static float unit = width * 0.5f;
 
+    public static float cvtX(float Value) {
+        return width * 0.5f + unit * Value;
+    }
+
+    public static float cvtY(float Value) {
+        return height * 0.5f + unit * Value;
+    }
+
+    public static float ASP(float Value) {
+        return Value * width / height;
+    }
 
     public static void setGameSize(float width, float height) {
         Metrics.width = width;

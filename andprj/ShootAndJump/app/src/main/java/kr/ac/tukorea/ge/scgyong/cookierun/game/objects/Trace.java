@@ -30,12 +30,8 @@ public class Trace extends Sprite implements IBoxCollidable  {
         super(mipmapId);
         Bitmap bitmap = BitmapPool.get(mipmapId);
         positionX = createPositionX;
-        positionY = screenHeight * 0.8f;
+        positionY = Metrics.cvtY(0.3f);
         moveDirection = direction;
-
-        setPosition(positionX + MainScene.camera.shakeResultX,
-                positionY + MainScene.camera.shakeResultY,
-                unit * 0.1f, unit * 0.1f);
     }
 
     @Override
@@ -55,13 +51,13 @@ public class Trace extends Sprite implements IBoxCollidable  {
 
         Scene scene = Scene.top();
 
-        // 몬스터 명중 시 몬스터 삭제 후 스스로 삭제
+        // 몬스터 명중 시 대미지 준 후 스스로 삭제
         ArrayList<IGameObject> objects = scene.objectsAt(MainScene.Layer.LAYER1);
         for (IGameObject obj : objects) {
             if (obj instanceof Monster) {
                 Monster monster = (Monster) obj;
                 if (collisionRect.intersect((monster.getCollisionRect()))) {
-                    scene.remove(MainScene.Layer.LAYER1, monster);
+                    monster.giveDamage(1);
                     scene.remove(MainScene.Layer.LAYER3, this);
                     return;
                 }
