@@ -24,7 +24,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 public class MainScene extends Scene {
     public static Player player;
     public PlayerHP playerHP;
-    public MonsterGenerator generator;
+    public static MonsterGenerator generator;
     public static Camera camera;
     public Background background;
     public static GameScore gameScore;

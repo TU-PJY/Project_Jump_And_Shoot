@@ -32,11 +32,21 @@ public class GameScore implements IGameObject {
     public void update() {
         // 10점마다 난이도 상승
         // 플레이어 체력 회복
+        // 몬스터 스폰 간격 감소
         if(score - startScore >= 10) {
             Sound.playEffect(R.raw.next_round);
             round++;
             startScore = score;
             MainScene.player.HP = 5;
+
+            // 최대 0.8초
+            if(MainScene.generator.spawnTime > 1.0)
+                MainScene.generator.spawnTime -= 0.2f;
+
+            // 큰 몬스터 스폰률 5% 증가
+            // 최대 50%
+            if(MainScene.generator.bigProbability < 0.5f)
+                MainScene.generator.bigProbability += 0.05f;
         }
     }
 

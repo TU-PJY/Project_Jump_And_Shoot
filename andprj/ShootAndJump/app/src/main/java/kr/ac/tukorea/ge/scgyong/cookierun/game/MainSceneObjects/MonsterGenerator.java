@@ -13,7 +13,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MonsterGenerator implements IGameObject {
     private float currentTime;
-    private float spwanTime = 1.5f;
+    public float spawnTime = 2.0f;
+    public float bigProbability = 0.2f;
     float unit = Metrics.height * 0.5f;
 
     Random rand = new Random();
@@ -26,14 +27,14 @@ public class MonsterGenerator implements IGameObject {
     //  currentTime이 spawnTime에 도달할 때마다 몬스터를 1마리씩 스폰한다.
     public void update() {
         currentTime += GameView.frameTime;
-        if(currentTime >= spwanTime) {
-            currentTime -= spwanTime;
+        if(currentTime >= spawnTime) {
+            currentTime -= spawnTime;
             Monster monster;
             BigMonster bigMonster;
 
             int randomSpawnDirection = rand.nextBoolean() ? 1 : -1;
             // 20퍼센트 확률로 큰 몬스터 스폰
-            boolean spawnBig = Math.random() < 0.2;
+            boolean spawnBig = Math.random() < bigProbability;
 
             Scene scene = Scene.top();
 
