@@ -82,6 +82,9 @@ inputEvent(int touchType)
 0은 스크린 좌측 터치, 1은 스크린 우측 터치로 인식하도록 되어있다.  
 
 # 3차 발표 자료  
+## 동영상 링크  
+https://youtu.be/vhwoHaHGWww  
+
 ## 간단 소개  
 플레이어를 좌, 우로 움직이여 좌우에서 몰려드는 적을 처치하는 게임  
   
