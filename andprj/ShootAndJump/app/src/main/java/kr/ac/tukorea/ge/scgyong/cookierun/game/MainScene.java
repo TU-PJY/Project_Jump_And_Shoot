@@ -7,7 +7,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
 public class MainScene extends Scene {
-    private final Player player;
+    public static Player player;
+    public MonsterGenerator generator;
 
     public enum Layer {
         LAYER1, LAYER2, LAYER3, LAYER4, LAYER5;
@@ -17,9 +18,11 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.COUNT);
 
-        // 1번 레이어에 플레이어 추가
         player = new Player(R.mipmap.commando_left);
-        add(Layer.LAYER1, player);
+        generator = new MonsterGenerator();
+
+        add(Layer.LAYER1, generator);
+        add(Layer.LAYER2, player);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
