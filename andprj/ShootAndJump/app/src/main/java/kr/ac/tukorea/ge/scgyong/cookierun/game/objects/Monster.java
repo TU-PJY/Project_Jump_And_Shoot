@@ -27,6 +27,7 @@ public class Monster extends Sprite implements IBoxCollidable {
     public int HP = 2;
 
     public boolean dead;
+    private float removeTimer;
 
     private final RectF collisionRect = new RectF();
 
@@ -44,6 +45,8 @@ public class Monster extends Sprite implements IBoxCollidable {
     }
 
     public void giveDamage(int Value) {
+        if(HP == 0)
+            return;
         HP -= Value;
     }
 
@@ -57,33 +60,42 @@ public class Monster extends Sprite implements IBoxCollidable {
         // 체력이 0이 될 경우 스스로 삭제
         if(HP == 0) {
             dead = true;
-            Scene scene = Scene.top();
-            scene.remove(MainScene.Layer.LAYER1, this);
-            return;
-        }
 
-        // 플레이어 위치에 따라 몬스터 이동 방향이 달라진다.
-        float destPosition = MainScene.player.getPosition();
-        if(positionX < destPosition) {
-            moveDirection = 1;
-            if (prevDirection != moveDirection) {
-                setImageResourceId(R.mipmap.monster_right);
-                prevDirection = moveDirection;
+            if(moveDirection == 1)
+                setImageResourceId(R.mipmap.monster_dead_right);
+            else
+                setImageResourceId(R.mipmap.monster_dead_left);
+
+            removeTimer += GameView.frameTime;
+            if(removeTimer >= 1.0) {
+                Scene scene = Scene.top();
+                scene.remove(MainScene.Layer.LAYER1, this);
+                return;
             }
         }
 
-        else if(positionX > destPosition) {
-            moveDirection = 0;
-            if (prevDirection != moveDirection) {
-                setImageResourceId(R.mipmap.monster_left);
-                prevDirection = moveDirection;
+        else {
+            // 플레이어 위치에 따라 몬스터 이동 방향이 달라진다.
+            float destPosition = MainScene.player.getPosition();
+            if (positionX < destPosition) {
+                moveDirection = 1;
+                if (prevDirection != moveDirection) {
+                    setImageResourceId(R.mipmap.monster_right);
+                    prevDirection = moveDirection;
+                }
+            } else if (positionX > destPosition) {
+                moveDirection = 0;
+                if (prevDirection != moveDirection) {
+                    setImageResourceId(R.mipmap.monster_left);
+                    prevDirection = moveDirection;
+                }
             }
-        }
 
-        if(moveDirection == 0)
-            positionX -= GameView.frameTime * Metrics.unit;
-        else
-            positionX += GameView.frameTime * Metrics.unit;
+            if (moveDirection == 0)
+                positionX -= GameView.frameTime * Metrics.unit;
+            else
+                positionX += GameView.frameTime * Metrics.unit;
+        }
 
         collisionRect.set
                 (
