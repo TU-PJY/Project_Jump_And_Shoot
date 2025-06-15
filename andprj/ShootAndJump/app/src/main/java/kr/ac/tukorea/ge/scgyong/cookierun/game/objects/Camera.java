@@ -1,16 +1,10 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game;
+package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
 
 import android.graphics.Canvas;
-import android.graphics.RectF;
-import android.util.Log;
 
 import java.util.Random;
 
-import kr.ac.tukorea.ge.scgyong.cookierun.R;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 

@@ -3,6 +3,9 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Camera;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.MonsterGenerator;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Player;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 

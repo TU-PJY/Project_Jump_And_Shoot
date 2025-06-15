@@ -1,9 +1,10 @@
-package kr.ac.tukorea.ge.scgyong.cookierun.game;
+package kr.ac.tukorea.ge.scgyong.cookierun.game.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.MainScene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IBoxCollidable;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool;
