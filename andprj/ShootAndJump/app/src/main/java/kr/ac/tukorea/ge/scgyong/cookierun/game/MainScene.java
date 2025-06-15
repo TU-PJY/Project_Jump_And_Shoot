@@ -7,6 +7,7 @@ import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Background;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Camera;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.MonsterGenerator;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Player;
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.Sound;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene;
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics;
 
@@ -34,6 +35,8 @@ public class MainScene extends Scene {
         add(Layer.LAYER1, camera);
         add(Layer.LAYER1, generator);
         add(Layer.LAYER2, player);
+
+        Sound.playMusic(R.raw.game_bgm);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -51,11 +54,22 @@ public class MainScene extends Scene {
         return false;
     }
 
+    public boolean onBackPressed() {
+        Sound.stopMusic();
+        return false;
+    }
+
+
+
     public void onLeftTouch() {
         player.inputEvent(0);
     }
 
     public void onRightTouch() {
         player.inputEvent(1);
+    }
+
+    public void onBack() {
+
     }
 }
