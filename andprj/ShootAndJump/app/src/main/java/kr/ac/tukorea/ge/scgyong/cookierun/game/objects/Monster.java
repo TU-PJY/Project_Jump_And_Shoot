@@ -20,9 +20,6 @@ public class Monster extends Sprite implements IBoxCollidable {
     int moveDirection = 0;
     int prevDirection = -1;
 
-    // 몬스터 이미지
-    Bitmap currentImage;
-
     // 몬스터 체력
     public int HP = 2;
 
@@ -33,7 +30,6 @@ public class Monster extends Sprite implements IBoxCollidable {
 
     public Monster(int mipmapId, float createPositionX) {
         super(mipmapId);
-        currentImage = BitmapPool.get(mipmapId);
 
         // 생성자에서 입력받는 위치로 몬스터 스폰
         positionX = Metrics.cvtX(createPositionX);

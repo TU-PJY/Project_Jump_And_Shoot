@@ -28,7 +28,6 @@ public class Trace extends Sprite implements IBoxCollidable  {
 
     public Trace(int mipmapId, float createPositionX, int direction) {
         super(mipmapId);
-        Bitmap bitmap = BitmapPool.get(mipmapId);
         positionX = createPositionX;
         positionY = Metrics.cvtY(0.3f);
         moveDirection = direction;

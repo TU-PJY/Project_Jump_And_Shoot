@@ -46,13 +46,11 @@ public class Player extends Sprite implements IBoxCollidable {
     private int prevMoveState = -1;
 
     // 플레이어 이동 가능 횟수
-    // -1 ~ 1 가능
     private int moveCount = 0;
 
     float spriteRatio = 0.0f;
     public Player(int mipmapId) {
         super(mipmapId);
-        currentImage = BitmapPool.get(mipmapId);
 
         float spriteWidth = bitmap.getWidth();
         float spriteHeight = bitmap.getHeight();
@@ -75,7 +73,7 @@ public class Player extends Sprite implements IBoxCollidable {
             if(moveCount >= 1)
                 return;
 
-            destPositionX += Metrics.unit * 1.5f;
+            destPositionX += Metrics.unit * 1.2f;
             moveState = 1;
             moveCount ++;
 
@@ -89,7 +87,7 @@ public class Player extends Sprite implements IBoxCollidable {
             if(moveCount <= -1)
                 return;
 
-            destPositionX -= Metrics.unit * 1.5f;
+            destPositionX -= Metrics.unit * 1.2f;
             moveState = 0;
             moveCount --;
             if(prevMoveState != moveState) {
@@ -122,7 +120,7 @@ public class Player extends Sprite implements IBoxCollidable {
         // 목표 지점에 도달하면 입력을 다시 받는다.
         // 왼쪽 이동
         if(moveState == 0) {
-            positionX -= GameView.frameTime * Metrics.unit * 4.0f;
+            positionX -= GameView.frameTime * Metrics.unit * 3.0f;
             if(positionX < destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
@@ -131,7 +129,7 @@ public class Player extends Sprite implements IBoxCollidable {
 
         // 오른쪽 이동
         else if(moveState == 1) {
-            positionX += GameView.frameTime * Metrics.unit * 4.0f;
+            positionX += GameView.frameTime * Metrics.unit * 3.0f;
             if(positionX > destPositionX) {
                 positionX = destPositionX;
                 moveEnabled = true;
@@ -140,7 +138,7 @@ public class Player extends Sprite implements IBoxCollidable {
 
         // 이동 중에는 점프
         if(!moveEnabled) {
-            float totalMove = Metrics.unit * 1.5f;
+            float totalMove = Metrics.unit * 1.2f;
             float moved = Math.abs(destPositionX - positionX);
             float progress = moved / totalMove;
             if(progress > 1.0f) progress = 1.0f;

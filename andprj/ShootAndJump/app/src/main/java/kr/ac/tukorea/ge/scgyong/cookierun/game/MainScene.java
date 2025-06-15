@@ -3,6 +3,7 @@ package kr.ac.tukorea.ge.scgyong.cookierun.game;
 import android.view.MotionEvent;
 
 import kr.ac.tukorea.ge.scgyong.cookierun.R;
+import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Background;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Camera;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.MonsterGenerator;
 import kr.ac.tukorea.ge.scgyong.cookierun.game.objects.Player;
@@ -14,6 +15,8 @@ public class MainScene extends Scene {
     public MonsterGenerator generator;
     public static Camera camera;
 
+    public Background background;
+
     public enum Layer {
         LAYER1, LAYER2, LAYER3, LAYER4, LAYER5;
         public static final int COUNT = values().length;
@@ -22,10 +25,12 @@ public class MainScene extends Scene {
     public MainScene() {
         initLayers(Layer.COUNT);
 
+        background = new Background(R.mipmap.background);
         player = new Player(R.mipmap.commando_left);
         generator = new MonsterGenerator();
         camera = new Camera();
 
+        add(Layer.LAYER1, background);
         add(Layer.LAYER1, camera);
         add(Layer.LAYER1, generator);
         add(Layer.LAYER2, player);

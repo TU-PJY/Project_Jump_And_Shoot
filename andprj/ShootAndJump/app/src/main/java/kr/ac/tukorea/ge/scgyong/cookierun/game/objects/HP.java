@@ -20,13 +20,16 @@ public class HP implements IGameObject {
 
     private float positionX;
     private float positionY;
-    Sprite sprite;
+    Sprite front;
+    Sprite back;
+
 
     boolean drawEnabled;
 
     // 특정 몬스터만 추적한다.
     public HP(int mipmapId, Monster monsterInstance) {
-        sprite = new Sprite(mipmapId);
+        front = new Sprite(mipmapId);
+        back = new Sprite(R.mipmap.hp_indicator_back);
         targetMonster = monsterInstance;
     }
 
@@ -52,12 +55,20 @@ public class HP implements IGameObject {
                     float renderPositionX = positionX - Metrics.unit * 0.025f + Metrics.unit * 0.07f * i;
                     renderPositionX -= Metrics.unit * 0.025f * (float) targetMonster.HP / 2.0f;
 
-                    sprite.setPosition(
+                    back.setPosition(
+                            renderPositionX + MainScene.camera.shakeResultX,
+                            positionY + MainScene.camera.shakeResultY,
+                            Metrics.unit * 0.07f, Metrics.unit * 0.07f
+                    );
+
+                    front.setPosition(
                             renderPositionX + MainScene.camera.shakeResultX,
                             positionY + MainScene.camera.shakeResultY,
                             Metrics.unit * 0.05f, Metrics.unit * 0.05f
                     );
-                    sprite.draw(canvas);
+
+                    back.draw(canvas);
+                    front.draw(canvas);
                 }
             }
         }
